@@ -18,4 +18,4 @@ char	generatorDir[NUMOFGENERATORS][20] = { "AlgorithmTesting", "LCG", "QCG1", "Q
 				
 char	testNames[NUMOFTESTS+1][32] = { " ", "Frequency", "BlockFrequency", "CumulativeSums", "Runs", "LongestRun", "Rank",
 			"FFT", "NonOverlappingTemplate", "OverlappingTemplate", "Universal", "ApproximateEntropy", "RandomExcursions",
-			"RandomExcursionsVariant", "Serial", "LinearComplexity" };
+			"RandomExcursionsVariant", "Serial", "LinearComplexity", "RunsDistribution", "Poker", "BinaryDerivative", "AutoCorrelation"};

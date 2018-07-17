@@ -18,3 +18,7 @@ void	RandomExcursions(int n);
 void	RandomExcursionsVariant(int n);
 void	LinearComplexity(int M, int n);
 void	Serial(int m, int n);
+void  RunsDistribution(int n);
+void  Poker(int m, int n);
+void  BinaryDerivative(int k, int n);
+void  AutoCorrelation(int d, int n);

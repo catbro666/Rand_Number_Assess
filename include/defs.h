@@ -23,7 +23,7 @@
 
 #define ALPHA							0.01	/* SIGNIFICANCE LEVEL */
 #define MAXNUMOFTEMPLATES				148		/* APERIODIC TEMPLATES: 148=>temp_length=9 */
-#define NUMOFTESTS						15		/* MAX TESTS DEFINED  */
+#define NUMOFTESTS						19		/* MAX TESTS DEFINED  */
 #define NUMOFGENERATORS					10		/* MAX PRNGs */
 #define MAXFILESPERMITTEDFORPARTITION	148
 #define	TEST_FREQUENCY					1
@@ -41,7 +41,10 @@
 #define	TEST_RND_EXCURSION_VAR			13
 #define	TEST_SERIAL						14
 #define	TEST_LINEARCOMPLEXITY			15
-
+#define TEST_RUNSDISTRIBUTION     16
+#define TEST_POKER                17
+#define TEST_BINARYDERIVATIVE     18
+#define TEST_AUTOCORRELATION      19
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                    G L O B A L   D A T A  S T R U C T U R E S
