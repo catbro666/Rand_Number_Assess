@@ -16,4 +16,8 @@ for dname in AlgorithmTesting BBS CCG G-SHA1 LCG MODEXP MS QCG1 QCG2 XOR ; do
 	mkdir $dname/CumulativeSums
 	mkdir $dname/RandomExcursions
 	mkdir $dname/RandomExcursionsVariant
+  mkdir $dname/RunsDistribution
+  mkdir $dname/Poker
+  mkdir $dname/BinaryDerivative
+  mkdir $dname/AutoCorrelation
 done
