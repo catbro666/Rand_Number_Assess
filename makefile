@@ -1,4 +1,4 @@
-CC = /usr/bin/gcc
+CC = /usr/bin/gcc -g -O3
 GCCFLAGS = -c -Wall
 ROOTDIR = .
 SRCDIR = $(ROOTDIR)/src
@@ -12,7 +12,9 @@ OBJ = $(OBJDIR)/assess.o $(OBJDIR)/frequency.o $(OBJDIR)/blockFrequency.o \
       $(OBJDIR)/overlappingTemplateMatchings.o $(OBJDIR)/universal.o \
       $(OBJDIR)/approximateEntropy.o $(OBJDIR)/randomExcursions.o \
       $(OBJDIR)/randomExcursionsVariant.o $(OBJDIR)/linearComplexity.o \
-      $(OBJDIR)/dfft.o $(OBJDIR)/cephes.o $(OBJDIR)/matrix.o \
+      $(OBJDIR)/runsDistribution.o $(OBJDIR)/poker.o \
+			$(OBJDIR)/binaryDerivative.o $(OBJDIR)/autoCorrelation.o \
+			$(OBJDIR)/dfft.o $(OBJDIR)/cephes.o $(OBJDIR)/matrix.o \
       $(OBJDIR)/utilities.o $(OBJDIR)/generators.o $(OBJDIR)/genutils.o
 
 assess: $(OBJ)
@@ -68,6 +70,18 @@ $(OBJDIR)/serial.o: $(SRCDIR)/serial.c defs.h externs.h
 
 $(OBJDIR)/linearComplexity.o: $(SRCDIR)/linearComplexity.c defs.h externs.h
 	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/linearComplexity.c
+
+$(OBJDIR)/runsDistribution.o: $(SRCDIR)/runsDistribution.c defs.h externs.h
+	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/runsDistribution.c
+
+$(OBJDIR)/poker.o: $(SRCDIR)/poker.c defs.h externs.h
+	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/poker.c
+
+$(OBJDIR)/binaryDerivative.o: $(SRCDIR)/binaryDerivative.c defs.h externs.h
+	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/binaryDerivative.c
+
+$(OBJDIR)/autoCorrelation.o: $(SRCDIR)/autoCorrelation.c defs.h externs.h
+	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/autoCorrelation.c
 
 $(OBJDIR)/dfft.o: $(SRCDIR)/dfft.c
 	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/dfft.c

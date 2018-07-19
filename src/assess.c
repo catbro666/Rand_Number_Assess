@@ -99,6 +99,13 @@ main(int argc, char *argv[])
 		partitionResultFile(18, tp.numOfBitStreams, option, TEST_RND_EXCURSION_VAR);
 	if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) )
 		partitionResultFile(2, tp.numOfBitStreams, option, TEST_SERIAL);
+  if ( ((testVector[0] == 1) || (testVector[TEST_POKER] == 1)) && tp.n > (320 * 8) )
+    partitionResultFile(2, tp.numOfBitStreams, option, TEST_POKER);
+	if ( (testVector[0] == 1) || (testVector[TEST_BINARYDERIVATIVE] == 1) )
+		partitionResultFile(2, tp.numOfBitStreams, option, TEST_BINARYDERIVATIVE);
+	if ( (testVector[0] == 1) || (testVector[TEST_AUTOCORRELATION] == 1) )
+		partitionResultFile(4, tp.numOfBitStreams, option, TEST_AUTOCORRELATION);
+
 	fprintf(summary, "------------------------------------------------------------------------------\n");
 	fprintf(summary, "RESULTS FOR THE UNIFORMITY OF P-VALUES AND THE PROPORTION OF PASSING SEQUENCES\n");
 	fprintf(summary, "------------------------------------------------------------------------------\n");
@@ -211,7 +218,10 @@ postProcessResults(int option)
 				 ((i == TEST_NONPERIODIC) && testVector[TEST_NONPERIODIC] ) ||
 				 ((i == TEST_RND_EXCURSION) && testVector[TEST_RND_EXCURSION]) ||
 				 ((i == TEST_RND_EXCURSION_VAR) && testVector[TEST_RND_EXCURSION_VAR]) || 
-				 ((i == TEST_SERIAL) && testVector[TEST_SERIAL]) ) {
+				 ((i == TEST_SERIAL) && testVector[TEST_SERIAL]) ||
+         ((i == TEST_POKER) && testVector[TEST_POKER] && tp.n > (320 * 8)) ||
+         ((i == TEST_BINARYDERIVATIVE) && testVector[TEST_BINARYDERIVATIVE]) || 
+         ((i == TEST_AUTOCORRELATION) && testVector[TEST_AUTOCORRELATION]) ) {
 				
 				if ( (i == TEST_NONPERIODIC) && testVector[TEST_NONPERIODIC] )  
 					numOfFiles = MAXNUMOFTEMPLATES;
@@ -219,6 +229,10 @@ postProcessResults(int option)
 					numOfFiles = 8;
 				else if ( (i == TEST_RND_EXCURSION_VAR) && testVector[TEST_RND_EXCURSION_VAR] ) 
 					numOfFiles = 18;
+        else if ( (i == TEST_BINARYDERIVATIVE) && testVector[TEST_BINARYDERIVATIVE] )
+          numOfFiles = 2;
+        else if ( (i == TEST_AUTOCORRELATION) && testVector[TEST_AUTOCORRELATION] ) 
+          numOfFiles = 4;
 				else
 					numOfFiles = 2;
 				for ( k=0; k<numOfFiles; k++ ) {

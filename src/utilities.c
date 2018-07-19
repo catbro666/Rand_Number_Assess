@@ -110,7 +110,9 @@ chooseTests()
 	printf("    [09] Overlapping Template Matchings  [10] Universal Statistical\n");
 	printf("    [11] Approximate Entropy             [12] Random Excursions\n");
 	printf("    [13] Random Excursions Variant       [14] Serial\n");
-	printf("    [15] Linear Complexity\n\n");
+	printf("    [15] Linear Complexity               [16] Runs Distribution\n");
+  printf("    [17] Poker                           [18] Binary Derivative\n");
+  printf("    [19] AutoCorrelation\n\n");
 	printf("         INSTRUCTIONS\n");
 	printf("            Enter 0 if you DO NOT want to apply all of the\n");
 	printf("            statistical tests to each sequence and 1 if you DO.\n\n");
@@ -124,8 +126,8 @@ chooseTests()
 		printf("         INSTRUCTIONS\n");
 		printf("            Enter a 0 or 1 to indicate whether or not the numbered statistical\n");
 		printf("            test should be applied to each sequence.\n\n");
-		printf("      123456789111111\n");
-		printf("               012345\n");
+		printf("      1234567891111111111\n");
+		printf("               0123456789\n");
 		printf("      ");
 		for ( i=1; i<=NUMOFTESTS; i++ ) 
 			scanf("%1d", &testVector[i]);
@@ -507,4 +509,32 @@ nist_test_suite()
 	
 	if ( (testVector[0] == 1) || (testVector[TEST_LINEARCOMPLEXITY] == 1) )
 		LinearComplexity(tp.linearComplexitySequenceLength, tp.n);
+
+	if ( (testVector[0] == 1) || (testVector[TEST_RUNSDISTRIBUTION] == 1) )
+    RunsDistribution(tp.n);
+
+  if ( (testVector[0] == 1) || (testVector[TEST_POKER] == 1) )
+  {
+    if ( tp.n >  (320 * 8) )  // 大于320bytes时，只检测m=4, 8
+    {
+      Poker(4, tp.n);
+      Poker(8, tp.n);
+    }
+    else          //不大于320bytes时，只检测m=2
+      Poker(2, tp.n);
+  }
+
+  if ( (testVector[0] == 1) || (testVector[TEST_BINARYDERIVATIVE] == 1) )
+  {
+    BinaryDerivative(3, tp.n);
+    BinaryDerivative(7, tp.n);
+  }
+
+  if ( (testVector[0] == 1) || (testVector[TEST_AUTOCORRELATION] == 1) )
+  {
+    AutoCorrelation(1, tp.n);
+		AutoCorrelation(2, tp.n);
+		AutoCorrelation(8, tp.n);
+		AutoCorrelation(16, tp.n);
+  }
 }
