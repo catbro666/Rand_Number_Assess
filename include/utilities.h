@@ -4,6 +4,7 @@
 
 int		displayGeneratorOptions();
 int		generatorOptions(char** streamFile);
+void  chooseMode();
 void	chooseTests();
 void	fixParameters();
 void	fileBasedBitStreams(char *streamFile);

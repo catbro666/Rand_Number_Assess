@@ -95,7 +95,27 @@ generatorOptions(char** streamFile)
 	return option;
 }
 
+void
+chooseMode()
+{
+  int err = 0;
+	do 
+  {
+    err = 0;
+    printf("   Test Mode:\n");
+	  printf("    [0] NIST - default mode\n");
+	  printf("    [1] GM - GM mode, fix test paramters as GM default values\n\n");
+	  printf("   Select test mode:  ");
+	  scanf("%1d", &tp.testmode);
+    if ((tp.testmode != 0) && (tp.testmode != 1))
+    {
+      printf("    input error, plese re-enter the choice!\n\n");
+      err = 1;
+    }
+  }while(err);
 
+	printf("\n");
+}
 void
 chooseTests()
 {
@@ -114,15 +134,15 @@ chooseTests()
   printf("    [17] Poker                           [18] Binary Derivative\n");
   printf("    [19] AutoCorrelation\n\n");
 	printf("         INSTRUCTIONS\n");
-	printf("            Enter 0 if you DO NOT want to apply all of the\n");
-	printf("            statistical tests to each sequence and 1 if you DO.\n\n");
+	printf("            Enter 0 if you want to manually choose the statistical tests.\n");
+	printf("            Enter 1 if you DO want to apply all statistical tests.\n");
+	printf("            Enter 2 if you want to apply all NIST default statistical tests.\n");
+	printf("            Enter 3 if you want to apply all GM default statistical tests.\n");
 	printf("   Enter Choice: ");
 	scanf("%d", &testVector[0]);
 	printf("\n");
-	if ( testVector[0] == 1 )
-		for( i=1; i<=NUMOFTESTS; i++ )
-			testVector[i] = 1;
-	else {
+	if ( testVector[0] == 0 )
+  {
 		printf("         INSTRUCTIONS\n");
 		printf("            Enter a 0 or 1 to indicate whether or not the numbered statistical\n");
 		printf("            test should be applied to each sequence.\n\n");
@@ -133,6 +153,26 @@ chooseTests()
 			scanf("%1d", &testVector[i]);
 		printf("\n\n");
 	}
+  else
+  {
+    for( i=1; i<=NUMOFTESTS; i++ )
+			testVector[i] = 1;
+    if ( testVector[0] == 2 )
+    {
+      testVector[16] = 0;
+      testVector[17] = 0;
+      testVector[18] = 0;
+      testVector[19] = 0;
+    }
+    else if (testVector[0] == 3)
+    {
+      
+      testVector[8] = 0;
+      testVector[9] = 0;
+      testVector[12] = 0;
+      testVector[13] = 0;
+    }
+  }
 }
 
 
@@ -469,8 +509,11 @@ nist_test_suite()
 		Frequency(tp.n);
 	
 	if ( (testVector[0] == 1) || (testVector[TEST_BLOCK_FREQUENCY] == 1) ) 
-		BlockFrequency(tp.blockFrequencyBlockLength, tp.n);
-	
+    if (tp.testmode == MODE_GM)
+      BlockFrequency(100, tp.n);
+    else
+      BlockFrequency(tp.blockFrequencyBlockLength, tp.n);
+
 	if ( (testVector[0] == 1) || (testVector[TEST_CUSUM] == 1) )
 		CumulativeSums(tp.n);
 	
@@ -496,8 +539,16 @@ nist_test_suite()
 		Universal(tp.n);
 	
 	if ( (testVector[0] == 1) || (testVector[TEST_APEN] == 1) )
-		ApproximateEntropy(tp.approximateEntropyBlockLength, tp.n);
-	
+	{
+    if (tp.testmode == MODE_GM)  //国密测试m=2,5
+    {
+      ApproximateEntropy(2, tp.n);
+      ApproximateEntropy(5, tp.n);
+    }
+    else
+      ApproximateEntropy(tp.approximateEntropyBlockLength, tp.n);
+  }
+
 	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION] == 1) )
 		RandomExcursions(tp.n);
 	
@@ -505,8 +556,14 @@ nist_test_suite()
 		RandomExcursionsVariant(tp.n);
 	
 	if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) )
-		Serial(tp.serialBlockLength,tp.n);
-	
+  {
+    if (tp.testmode == MODE_GM) //国密测试m=2,5
+    {
+      Serial(2,tp.n);
+      Serial(5,tp.n);
+    }
+    Serial(tp.serialBlockLength,tp.n);
+  }
 	if ( (testVector[0] == 1) || (testVector[TEST_LINEARCOMPLEXITY] == 1) )
 		LinearComplexity(tp.linearComplexitySequenceLength, tp.n);
 

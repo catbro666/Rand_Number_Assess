@@ -70,6 +70,7 @@ main(int argc, char *argv[])
 	}
 
 	tp.n = atoi(argv[1]);
+  tp.testmode = MODE_NIST;
 	tp.blockFrequencyBlockLength = 128;
 	tp.nonOverlappingTemplateBlockLength = 9;
 	tp.overlappingTemplateBlockLength = 9;
@@ -78,8 +79,12 @@ main(int argc, char *argv[])
 	tp.linearComplexitySequenceLength = 500;
 	tp.numOfBitStreams = 1;
 	option = generatorOptions(&streamFile);
-	chooseTests();
-	fixParameters();
+	chooseMode();
+  chooseTests();
+	if (tp.testmode == MODE_GM)
+    ;
+  else
+    fixParameters();
 	openOutputStreams(option);
 	invokeTestSuite(option, streamFile);
 	fclose(freqfp);
@@ -97,8 +102,15 @@ main(int argc, char *argv[])
 		partitionResultFile(8, tp.numOfBitStreams, option, TEST_RND_EXCURSION);
 	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION_VAR] == 1) )
 		partitionResultFile(18, tp.numOfBitStreams, option, TEST_RND_EXCURSION_VAR);
-	if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) )
-		partitionResultFile(2, tp.numOfBitStreams, option, TEST_SERIAL);
+	if ( ((testVector[0] == 1) || (testVector[TEST_APEN] == 1)) && tp.testmode == MODE_GM)
+		partitionResultFile(2, tp.numOfBitStreams, option, TEST_APEN);
+  if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) )
+  {
+    if (tp.testmode == MODE_GM)
+      partitionResultFile(4, tp.numOfBitStreams, option, TEST_SERIAL);
+    else
+      partitionResultFile(2, tp.numOfBitStreams, option, TEST_SERIAL);
+  }
   if ( ((testVector[0] == 1) || (testVector[TEST_POKER] == 1)) && tp.n > (320 * 8) )
     partitionResultFile(2, tp.numOfBitStreams, option, TEST_POKER);
 	if ( (testVector[0] == 1) || (testVector[TEST_BINARYDERIVATIVE] == 1) )
@@ -218,7 +230,8 @@ postProcessResults(int option)
 				 ((i == TEST_NONPERIODIC) && testVector[TEST_NONPERIODIC] ) ||
 				 ((i == TEST_RND_EXCURSION) && testVector[TEST_RND_EXCURSION]) ||
 				 ((i == TEST_RND_EXCURSION_VAR) && testVector[TEST_RND_EXCURSION_VAR]) || 
-				 ((i == TEST_SERIAL) && testVector[TEST_SERIAL]) ||
+				 ((i == TEST_APEN) && testVector[TEST_APEN] && tp.testmode == MODE_GM) ||
+         ((i == TEST_SERIAL) && testVector[TEST_SERIAL]) ||
          ((i == TEST_POKER) && testVector[TEST_POKER] && tp.n > (320 * 8)) ||
          ((i == TEST_BINARYDERIVATIVE) && testVector[TEST_BINARYDERIVATIVE]) || 
          ((i == TEST_AUTOCORRELATION) && testVector[TEST_AUTOCORRELATION]) ) {
@@ -232,6 +245,8 @@ postProcessResults(int option)
         else if ( (i == TEST_BINARYDERIVATIVE) && testVector[TEST_BINARYDERIVATIVE] )
           numOfFiles = 2;
         else if ( (i == TEST_AUTOCORRELATION) && testVector[TEST_AUTOCORRELATION] ) 
+          numOfFiles = 4;
+        else if ( (i == TEST_SERIAL) && testVector[TEST_SERIAL] && tp.testmode != MODE_GM)
           numOfFiles = 4;
 				else
 					numOfFiles = 2;

@@ -46,6 +46,8 @@
 #define TEST_BINARYDERIVATIVE     18
 #define TEST_AUTOCORRELATION      19
 
+#define MODE_NIST               0
+#define MODE_GM                 1
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                    G L O B A L   D A T A  S T R U C T U R E S
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -54,7 +56,8 @@ typedef unsigned char	BitSequence;
 
 typedef struct _testParameters {
 	int		n;
-	int		blockFrequencyBlockLength;
+	int   testmode; 
+  int		blockFrequencyBlockLength;
 	int		nonOverlappingTemplateBlockLength;
 	int		overlappingTemplateBlockLength;
 	int		serialBlockLength;
