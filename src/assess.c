@@ -246,7 +246,7 @@ postProcessResults(int option)
           numOfFiles = 2;
         else if ( (i == TEST_AUTOCORRELATION) && testVector[TEST_AUTOCORRELATION] ) 
           numOfFiles = 4;
-        else if ( (i == TEST_SERIAL) && testVector[TEST_SERIAL] && tp.testmode != MODE_GM)
+        else if ( (i == TEST_SERIAL) && testVector[TEST_SERIAL] && tp.testmode == MODE_GM)
           numOfFiles = 4;
 				else
 					numOfFiles = 2;
