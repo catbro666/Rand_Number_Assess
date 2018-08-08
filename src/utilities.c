@@ -562,7 +562,8 @@ nist_test_suite()
       Serial(2,tp.n);
       Serial(5,tp.n);
     }
-    Serial(tp.serialBlockLength,tp.n);
+    else
+      Serial(tp.serialBlockLength,tp.n);
   }
 	if ( (testVector[0] == 1) || (testVector[TEST_LINEARCOMPLEXITY] == 1) )
 		LinearComplexity(tp.linearComplexitySequenceLength, tp.n);
