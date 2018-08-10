@@ -39,7 +39,7 @@ void Poker(int m, int n)
 		decRep = 0;
 		for(j = 0; j < m; j++)
 		{
-			decRep += epsilon[(i-1)*m+j] * (long)pow(2, m-1-j);
+			decRep += epsilon[i*m+j] * (long)pow(2, m-1-j);
 		}
 		++(Array[decRep]);
 	}
